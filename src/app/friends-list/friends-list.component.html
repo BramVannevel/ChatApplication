@@ -1,7 +1,8 @@
-<div *ngFor="let user of friends" class="ui list">
-  <div class="item">
+<div *ngFor="let user of friends" class="ui middle aligned selection list">
+  <div class="item" (click)="changeRecipient()">
+  <img class="ui avatar image">
       <div class="content">
-        <a class="header">{{user.username}}</a>
+        <div class="header">{{user.username}}</div>
       </div>
   </div>
 </div>

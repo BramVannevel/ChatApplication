@@ -1,20 +1,19 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Message } from '../models/message.model';
+import { ConversationDataService } from '../conversation-data.service'; 
 
 @Component({
   selector: 'app-conversation',
   templateUrl: './conversation.component.html',
-  styleUrls: ['./conversation.component.css']
+  styleUrls: ['./conversation.component.css'],
+  providers: [ConversationDataService]
 })
 export class ConversationComponent {
   private _messages: Message[] = [];
 
-  constructor() {
-    let message = new Message("hallo", "Me");
-    let message2 = new Message("back at ya", "You");
-    this._messages.push(message);
-    this._messages.push(message2);
-   }
+  constructor(private _conversationDataService : ConversationDataService) {
+    this._messages = this._conversationDataService.messages;
+  }
 
   get messages(){
     return this._messages;
@@ -22,13 +21,13 @@ export class ConversationComponent {
 
   sendSender(textSender : HTMLInputElement) : boolean {
     let message = new Message(textSender.value, "Me");
-    this._messages.push(message);
+    this._conversationDataService.sendMessage(message);
     return false;
   }
 
   sendReceiver(textReceiver : HTMLInputElement) : boolean {
     let message = new Message(textReceiver.value, "You");
-    this._messages.push(message);
+    this._conversationDataService.sendMessage(message);
     return false;
   }
 }
