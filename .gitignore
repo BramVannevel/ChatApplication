@@ -46,3 +46,6 @@ Thumbs.db
 
 #SECRET
 /projectbackend/app-env
+
+#BACKENDFILES
+/projectbackend/node_modules

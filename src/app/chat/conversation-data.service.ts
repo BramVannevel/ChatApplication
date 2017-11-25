@@ -15,11 +15,7 @@ import 'rxjs/add/operator/mergeMap';
 
 @Injectable()
 export class ConversationDataService {
-
-  private _currentUser = JSON.parse(localStorage.getItem('currentUser')).username;
-
-  private _userUrl = 'http://localhost:4200/API/users/';
-  private _msgUrl = 'http://localhost:4200/API/messages/';
+  private _userUrl = '/API/users';
   private _chatroomUrl = '/API/chatrooms';
 
   private _conversations = new BehaviorSubject<string>(null);
@@ -36,7 +32,8 @@ export class ConversationDataService {
   }
 
   changeConversation(name){
-    this.getUserByName(this._currentUser).subscribe(user => {
+    let currentUser = JSON.parse(localStorage.getItem('currentUser')).username;
+    this.getUserByName(currentUser).subscribe(user => {
       for(let conv of user.privateCH){
         if(conv.users.find(user => user === name)){
           console.log(conv);
@@ -51,7 +48,7 @@ export class ConversationDataService {
   }
 
   addGroup(groupHash){
-    let cU = this._currentUser.toLowerCase();
+    let cU = JSON.parse(localStorage.getItem('currentUser')).username.toLowerCase();
     return this.http.post(`${this._chatroomUrl}/createroom/${cU}`, groupHash)
       .map(res => res.json());
   }
@@ -63,24 +60,24 @@ export class ConversationDataService {
   }
 
   getUserByName(name){
-    return this.http.get(`http://localhost:4200/API/users/findbyname/${name.toLowerCase()}`)
+    return this.http.get(`${this._userUrl}/findbyname/${name.toLowerCase()}`)
       .map(response => response.json()).map(json => User.fromJSON(json));
   }
 
   getConversation(id): Observable<ChatRoom>{
-      return this.http.get(`http://localhost:4200/API/chatrooms/${id}`)
+      return this.http.get(`${this._chatroomUrl}/${id}`)
         .map(response => response.json());
   }
 
   addFriend(friend){
-    let cU = this._currentUser.toLowerCase();
-    return this.http.post(`http://localhost:4200/API/users/addfriend/${cU}`, {username: friend})
+    let cU = JSON.parse(localStorage.getItem('currentUser')).username.toLowerCase();
+    return this.http.post(`${this._userUrl}/addfriend/${cU}`, {username: friend})
      .map(response => response.json());
   }
 
   connectGroup(group){
-    let cU = this._currentUser.toLowerCase();
-    return this.http.post(`http://localhost:4200/API/users/connectGroup/${cU}`, {name : group})
+    let cU = JSON.parse(localStorage.getItem('currentUser')).username.toLowerCase();
+    return this.http.post(`${this._userUrl}/connectGroup/${cU}`, {name : group})
       .map(response => response.json());
   }
 }
