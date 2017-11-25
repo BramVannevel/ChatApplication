@@ -1,0 +1,14 @@
+<div>
+    <div class="chat-window" class="chat-window" ngx-auto-scroll> 
+        <app-message *ngFor="let message of messages" [message]="message"></app-message>
+    </div>
+    
+    <div>
+        <form [formGroup]='message' (ngSubmit)='onSubmit()'>
+            <input class="send-field" id="textSender" name="sender" formControlName='text' #sendertexting>
+            <button class="ui primary button" type='submit'>Send</button>
+        </form>
+    </div>
+</div>
+
+  

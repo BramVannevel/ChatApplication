@@ -43,3 +43,6 @@ Thumbs.db
 
 # Semantic Files
 /semantic
+
+#SECRET
+/projectbackend/app-env

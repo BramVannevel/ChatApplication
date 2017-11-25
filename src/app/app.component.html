@@ -1,20 +1,38 @@
-<!--The content below is only a placeholder and can be replaced.-->
-<div class="ui" style="text-align:center">
-  <h1>
-    {{title}}!
-  </h1>
-  <div class="ui two column divided grid">
-      <div class="four wide column">
-        <div class="ui segment">
-           <app-friends-list></app-friends-list>
-        </div>
-      </div>
-      <div class="eight wide column">
-        <div class="ui segment">
-            <app-conversation class="chat-window"></app-conversation>
-        </div>
-      </div>
-  </div>
-  
-</div>
+<div class="ui container">
+  <div class="ui secondary pointing menu">
+    <a class='item' routerLinkActive='active' 
+      routerLink="/chat/chat">Chat</a>
+    <a class='item' routerLinkActive='active' 
+      routerLink="/chat/add" >Create Group</a>
 
+    <div class="right menu" routerLinkActive='active'>
+      <div class="item">
+        <div class="ui transparent icon input">
+          <input type="text" placeholder="Search groups...">
+          <i class="search link icon"></i>
+        </div>
+      </div>
+
+      <div routerLink="/login" *ngIf='loggedIn() == false'>
+        <a class="ui item">
+            Login
+          </a>
+      </div>
+
+      <div routerLink="/register" *ngIf='loggedIn() == false'>
+        <a class="ui item">
+            Register
+          </a>
+      </div>
+
+      <div routerLink="/logout" *ngIf='loggedIn() == true'>
+        <a class="ui item">
+            Logout
+          </a>
+      </div>
+    </div>
+
+
+  </div>
+  <router-outlet></router-outlet>
+</div>

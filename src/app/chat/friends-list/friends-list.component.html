@@ -1,0 +1,18 @@
+<div class="menu">
+  <div class="ui category search item">
+    <div class="ui transparent icon input">
+      <form [formGroup]='user' (ngSubmit)='onSubmit()'>
+        <i class="add user icon"></i>
+        <input class="prompt" type="text" placeholder="Add user..." formControlName='friend'>
+      </form>
+    </div>
+  </div>
+</div>
+<div *ngFor="let user of friends" class="ui middle aligned selection list">
+  <div class="item" (click)="changeConversation(user)">
+  <img class="ui avatar image" src="https://scontent-bru2-1.xx.fbcdn.net/v/t31.0-8/18193457_10212364742814714_5218855983317554186_o.jpg?oh=74e4a06de5ef6b85e75d8bd3c78861af&oe=5A7556D6">
+      <div class="content">
+        <div class="header">{{user.username}}</div>
+      </div>
+  </div>
+</div>

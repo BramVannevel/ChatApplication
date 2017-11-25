@@ -1,0 +1,23 @@
+<!--<div class="chat-rooms">
+  Chat Room + active chat-room
+  nieuw tab details chatrooms
+  search bar next to logout for searchingchatroom
+</div>-->
+<div class="menu">
+  <div class="ui category search item">
+    <div class="ui transparent icon input">
+      <form [formGroup]='group' (ngSubmit)='onSubmit()'>
+          <input class="prompt" type="text" placeholder="Add group..." formControlName='group'>
+          <i class="users icon"></i>
+      </form>
+    </div>
+  </div>
+</div>
+<div *ngFor="let room of groups" class="ui card featured-card" (click)="changeConversation(room)">
+  <div class="content">
+    {{room.name}}
+  </div>
+  <div class="image">
+    <img src="{{room.image}}" alt="No image">
+  </div>
+</div>

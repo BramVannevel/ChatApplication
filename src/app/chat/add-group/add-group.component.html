@@ -1,0 +1,25 @@
+<form [formGroup]='group' (ngSubmit)='onSubmit()' class="ui large form segment">
+  <h3>Create Group</h3>
+  <div class="field">
+    <label for='name'>Name:</label>
+    <input type='text' id='name' formControlName='name'>
+    <br>
+    <div *ngIf='group.get("name").errors?.required && group.get("name").touched'
+      class='ui pointing red basic label'>
+      Name is required!
+    </div>
+  </div>
+  <div class="field">
+    <label for='photo'>photo link:</label>
+    <input type='text' id='photo' formControlName='photo'>
+  </div>
+  <div class="field">
+    <label for='tags'>tags:</label>
+    <input type='text' id='tags' formControlName='tags'>
+  </div>
+  <div class="inline field">
+    <label for='public'>Public group:</label>
+    <input type='checkbox' id='public' formControlName='public' class="ui checkbox">
+  </div>
+  <button type='submit' class="ui positive button">Create</button>
+</form>

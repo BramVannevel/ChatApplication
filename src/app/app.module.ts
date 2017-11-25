@@ -1,23 +1,24 @@
 import { BrowserModule } from '@angular/platform-browser';
+import { RouterModule, Routes } from '@angular/router';
 import { NgModule } from '@angular/core';
 
-import { AppComponent } from './app.component';
-import { MessageComponent } from './message/message.component';
-import { ConversationComponent } from './conversation/conversation.component';
+import {UserModule} from './user/user.module';
+import {AppRoutingModule} from './app-routing/app-routing.module';
 
-import {NgxAutoScroll} from "ngx-auto-scroll/lib/ngx-auto-scroll.directive";
-import { FriendsListComponent } from './friends-list/friends-list.component';
+//COMPONENTS
+
+import { AppComponent } from './app.component';
+import {PageNotFoundComponent} from './page-not-found/page-not-found.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    MessageComponent,
-    ConversationComponent,
-    NgxAutoScroll,
-    FriendsListComponent
+    PageNotFoundComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    UserModule,
+    AppRoutingModule
   ],
   providers: [],
   bootstrap: [AppComponent]
