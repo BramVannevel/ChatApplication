@@ -7,7 +7,7 @@ var bodyParser = require('body-parser');
 let mongoose = require('mongoose');
 let passport = require('passport');
 
-mongoose.connect('mongodb://localhost/chatdb', { useMongoClient: true });
+mongoose.connect(process.env.CHAT_BACKEND, { useMongoClient: true });
 
 require('./models/User');
 require('./models/Message');

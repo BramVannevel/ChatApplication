@@ -53,7 +53,7 @@ export class ConversationDataService {
   }
 
   addGroup(groupHash){
-    let cU = this._currentUser.toLowerCase();
+    let cU = JSON.parse(localStorage.getItem('currentUser')).username.toLowerCase();
     return this.http.post(`${this._chatroomUrl}/createroom/${cU}`, groupHash,{headers: this.myHeaders})
       .map(res => res.json());
   }
@@ -75,13 +75,13 @@ export class ConversationDataService {
   }
 
   addFriend(friend){
-    let cU = this._currentUser.toLowerCase();
+    let cU = JSON.parse(localStorage.getItem('currentUser')).username.toLowerCase();
     return this.http.post(`http://localhost:4200/API/users/addfriend/${cU}`, {username: friend}, {headers: this.myHeaders})
      .map(response => response.json());
   }
 
   connectGroup(group){
-    let cU = this._currentUser.toLowerCase();
+    let cU = JSON.parse(localStorage.getItem('currentUser')).username.toLowerCase();
     return this.http.post(`http://localhost:4200/API/users/connectGroup/${cU}`, {name : group}, {headers: this.myHeaders})
       .map(response => response.json());
   }
