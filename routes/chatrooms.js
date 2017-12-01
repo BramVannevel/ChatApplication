@@ -64,8 +64,8 @@ router.post('/postmessage/:id', auth, function(req, res, next){
   });
 });
 
-router.get('/:chatroom', auth, function(req, res, next){
-  let query = ChatRoom.findById(id).populate(['users','messages']);
+router.get('/:id', auth, function(req, res, next){
+  let query = ChatRoom.findById(req.params.id).populate(['users','messages']);
   query.exec(function (err, chatroom){
     if(err) {return next(err)}
     if(!chatroom){ return next(new Error('not found ' + id)); }
