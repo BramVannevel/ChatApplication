@@ -5,11 +5,13 @@ export class Message {
     private _text: string;
     private _user: string;
     private _timestamp: Date;
+    private _country: string;
 
-    constructor(text: string, user: string){
+    constructor(text: string, user: string, country:string){
         this._text = text;
         this._user = user;
         this._timestamp = new Date();
+        this._country = country;
     }
 
     get id(){
@@ -28,12 +30,17 @@ export class Message {
         return this._timestamp;
     }
 
+    get country(){
+        return this._country;
+    }
+
     toJSON(){
         return {
             _id: this._id,
             text: this._text,
             timestamp: this._timestamp,
-            user: this.user
+            user: this.user,
+            country: this.country
         }
     }
 }

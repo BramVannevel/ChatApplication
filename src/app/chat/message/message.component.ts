@@ -13,6 +13,7 @@ export class MessageComponent {
 
   listClass = "";
   lowerDiv = "";
+  country = "";
 
   constructor() { 
   }
@@ -20,6 +21,8 @@ export class MessageComponent {
   ngOnChanges(){
     let classes = "";
     let lowerDivs = "";
+    let country = "";
+
     if(this.message.user === this._currentUser){
       classes = "right-side";
       lowerDivs = "lower-right"
@@ -27,10 +30,16 @@ export class MessageComponent {
       classes = "left-side";
       lowerDivs = "lower-left";
     }
-
+  
     classes = classes.concat(" message");
     lowerDivs = lowerDivs.concat(" lower-general");
-
+    if(this.message.country !== undefined){
+      let c = this.message.country.toLowerCase();
+      country = country.concat(`${c} flag`);
+      console.log(country);
+    }
+    
+    this.country = country;
     this.lowerDiv = lowerDivs;
     this.listClass = classes;
     
