@@ -70,7 +70,10 @@ export class ConversationDataService {
 
   getConversation(id): Observable<ChatRoom>{
       return this.http.get(`${this._chatroomUrl}/${id}`, {headers: this.myHeaders})
-        .map(response => response.json());
+        .map(response => {
+          console.log(response);
+          return response.json()
+        });
   }
 
   addFriend(friend){
