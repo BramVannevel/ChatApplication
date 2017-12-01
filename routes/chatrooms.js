@@ -64,7 +64,16 @@ router.post('/postmessage/:id', auth, function(req, res, next){
   });
 });
 
-router.get('/:chatroom', auth, function(req, res) {
+router.get('/:chatroom', auth, function(req, res, next){
+  let query = ChatRoom.findById(id).populate(['users','messages']);
+  query.exec(function (err, chatroom){
+    if(err) {return next(err)}
+    if(!chatroom){ return next(new Error('not found ' + id)); }
+    res.json(chatroom);
+  });
+});
+
+/*router.get('/:chatroom', auth, function(req, res) {
   res.json(req.chatroom);
 });
 
@@ -76,6 +85,6 @@ router.param('chatroom', auth, function(req, res, next, id) {
       req.chatroom = chatroom;
     return next();
   });
-}); 
+}); */
 
 module.exports = router;
