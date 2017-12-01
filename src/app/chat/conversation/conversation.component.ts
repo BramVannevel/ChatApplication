@@ -59,10 +59,10 @@ export class ConversationComponent implements OnInit {
               found = true;
             }
           };
-          console.log(`FOUND?: ${found}`);
+          console.log(`FOUND?: ${found} ${item}`);
           if(!found){
             // IF NOTHING FOUND RESET BHSubject
-            this._conversationDataService.changeToGroupConversation("");
+            this._conversationDataService.changeToGroupConversation(null);
           }else{
             // IF FOUND CHANGE TO LAST ACTIVE CONVO
             this._conversationDataService.getConversation(item).subscribe(conv => {
