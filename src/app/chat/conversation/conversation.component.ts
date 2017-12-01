@@ -15,7 +15,7 @@ export class ConversationComponent implements OnInit {
   private _conversation;
   private message: FormGroup;
   private country;
-  private _last_active_conv = null;
+  private last_active;
 
   private _msgs = new Array<Message[]>();
 
@@ -28,49 +28,47 @@ export class ConversationComponent implements OnInit {
 
     //SUBBING ON ACTIVE CONVO
     this._conversationDataService.active_conversation.subscribe(item => {
-      console.log(`item: ${item} versus last_active:${this._last_active_conv}`);
-      
-      if(item !== this._last_active_conv){
-        // RETRIEVING CURRENT USER
-        this._conversationDataService.getUserByName(this._currentUser).subscribe(user => {
-          this.country = user.country;
-          // IF ACTIVE CONVO === NULL OR ""
-          if(item === null || item === ""){
-            // IF USER HAS PM
-              if(user.privateCH.length > 0){
-                this._conversationDataService.changeConversationId(user.privateCH[0]._id);
-              }else{
-                // DISABLE CHAT
-                this.message.disable();
-              }
-          }else{
-            // ITEM !=== NULL OR ""
-            let found = false;
-            // CHECK IF FOUND IN PM
-            for(let element of user.privateCH){
-              if(element._id === item){
-                found = true;
-              }
-            };
-            // CHECK IF FOUND IN GM
-            for(let element of user.groupCH){
-              if(element._id === item){
-                found = true;
-              }
-            };
-            if(!found){
-              // IF NOTHING FOUND RESET BHSubject
-              this._conversationDataService.changeConversationId(null);
+      console.log(this.last_active);
+      this.last_active = item;
+      // RETRIEVING CURRENT USER
+      this._conversationDataService.getUserByName(this._currentUser).subscribe(user => {
+        this.country = user.country;
+        // IF ACTIVE CONVO === NULL OR ""
+        if(item === null){
+          // IF USER HAS PM
+            if(user.privateCH.length > 0){
+              this._conversationDataService.changeConversationId(user.privateCH[0]._id);
             }else{
-              // IF FOUND CHANGE TO LAST ACTIVE CONVO
-              this._conversationDataService.getConversation(item).subscribe(conv => {
-                this.message.enable();
-                this._conversation = conv;
-              });
-            } 
-          }
-        });
-      } 
+              // DISABLE CHAT
+              this.message.disable();
+            }
+        }else{
+          // ITEM !=== NULL OR ""
+          let found = false;
+          // CHECK IF FOUND IN PM
+          for(let element of user.privateCH){
+            if(element._id === item){
+              found = true;
+            }
+          };
+          // CHECK IF FOUND IN GM
+          for(let element of user.groupCH){
+            if(element._id === item){
+              found = true;
+            }
+          };
+          if(!found){
+            // IF NOTHING FOUND RESET BHSubject
+            this._conversationDataService.changeConversationId(null);
+          }else{
+            // IF FOUND CHANGE TO LAST ACTIVE CONVO
+            this._conversationDataService.getConversation(item).subscribe(conv => {
+              this.message.enable();
+              this._conversation = conv;
+            });
+          } 
+        }
+      });
     });
   }
 
