@@ -28,7 +28,7 @@ export class ConversationComponent implements OnInit {
     this._conversationDataService.active_conversation.subscribe(item => {
       this._conversationDataService.getUserByName(this._currentUser).subscribe(user => {
         this.country = user.country;
-        if(item == null){
+        if(item == null || item == ""){
             if(user.privateCH.length > 0){
               this._conversationDataService.getConversation(user.privateCH[0]._id).subscribe(conv => {
                 this.message.enable();
