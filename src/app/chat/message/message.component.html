@@ -1,7 +1,7 @@
 <div [class]="listClass" >
     <div [class]="lowerDiv">
         <div class="name-div">
-            <i [class]="country"></i>
+            <span countryToolTip="{{message.country}}"><i [class]="country"></i></span>
             {{message.user}}
         </div>
         {{message.text}}
