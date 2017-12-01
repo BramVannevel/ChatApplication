@@ -39,7 +39,7 @@ export class ConversationDataService {
     // GET CURRENT USER
     let currentUser = JSON.parse(localStorage.getItem('currentUser')).username;
     // RETRIEVE CURRENT USER FROM DB
-    console.log("REQUESTING GETUSEDBYNAME from changeConversation");
+    //console.log("REQUESTING GETUSEDBYNAME from changeConversation");
     this.getUserByName(currentUser).subscribe(user => {
       // CHECK IF USER HAS PM WITH OTHER USER (name)
       for(let conv of user.privateCH){

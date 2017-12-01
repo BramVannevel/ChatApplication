@@ -17,7 +17,7 @@ export class FeaturedChatsComponent implements OnInit{
 
   ngOnInit(){
     let currentUser = JSON.parse(localStorage.getItem('currentUser')).username;
-    console.log("REQUESTING USERBYNAME FROM GROUPLIST");
+    //console.log("REQUESTING USERBYNAME FROM GROUPLIST");
     this._conversationDataService.getUserByName(currentUser).subscribe(user => {
       this._groups = user.groupCH;
     });

@@ -27,10 +27,10 @@ export class ConversationComponent implements OnInit {
 
     //SUBBING ON ACTIVE CONVO
     this._conversationDataService.active_conversation.subscribe(item => {
-      console.log(`LAST ACTIVE CONVO: ${item}`);
+      //console.log(`LAST ACTIVE CONVO: ${item}`);
       // RETRIEVING CURRENT USER
       this._conversationDataService.getUserByName(this._currentUser).subscribe(user => {
-        console.log("CALLLED GETUSERBYID from CONVO COMPONENT")
+        //console.log("CALLLED GETUSERBYID from CONVO COMPONENT")
         this.country = user.country;
         // IF ACTIVE CONVO === NULL OR ""
         if(item === null || item === ""){
@@ -49,17 +49,21 @@ export class ConversationComponent implements OnInit {
           let found = false;
           // CHECK IF FOUND IN PM
           for(let element of user.privateCH){
+            console.log(user.privateCH);
             if(element._id === item){
               found = true;
+              console.log(`found:${found} item:${item} element_id:${element._id}`);
             }
           };
           // CHECK IF FOUND IN GM
           for(let element of user.groupCH){
+            console.log(user.groupCH);
             if(element._id === item){
               found = true;
+              console.log(`found:${found} item:${item} element_id:${element._id}`);
             }
           };
-          console.log(`FOUND?: ${found} ${item}`);
+          //console.log(`FOUND?: ${found} ${item}`);
           if(!found){
             // IF NOTHING FOUND RESET BHSubject
             this._conversationDataService.changeToGroupConversation(null);
