@@ -29,26 +29,6 @@ export class ConversationComponent implements OnInit {
     });
 
     this._conversationDataService.getUserByName(currentUser).subscribe(user => {
-      this._active_user = user;
-    });
-
-    this._conversationDataService.active_conversation.subscribe(item => {
-      if(item == null){
-        if(this._active_user.privateCH.length > 0){
-          this._conversationDataService.changeConversationId(this._active_user.privateCH[0]._id);
-        }else{
-          this.message.disable();
-        }
-      }else{
-        this._conversationDataService.getConversation(item).subscribe(conv => {
-          this.message.enable();
-          this._conversation = conv;
-        });
-      }
-    });
-
-
-    /*this._conversationDataService.getUserByName(currentUser).subscribe(user => {
       this.country = user.country;
       this._conversationDataService.active_conversation.subscribe(item => {
         if(item == null){
@@ -64,7 +44,7 @@ export class ConversationComponent implements OnInit {
           });
         }
       });
-    });*/
+    });
 
 
 
