@@ -64,6 +64,7 @@ export class ConversationDataService {
   }
 
   getUserByName(name){
+    console.log(`Requesting ${name}`);
     return this.http.get(`${this._userUrl}/findbyname/${name.toLowerCase()}`, {headers: this.myHeaders})
       .map(response => response.json()).map(json => User.fromJSON(json));
   }
