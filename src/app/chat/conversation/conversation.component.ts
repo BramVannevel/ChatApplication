@@ -27,6 +27,7 @@ export class ConversationComponent implements OnInit {
 
     //SUBBING ON ACTIVE CONVO
     this._conversationDataService.active_conversation.subscribe(item => {
+      console.log(`LAST ACTIVE CONVO: ${item}`);
       // RETRIEVING CURRENT USER
       this._conversationDataService.getUserByName(this._currentUser).subscribe(user => {
         console.log("CALLLED GETUSERBYID from CONVO COMPONENT")

@@ -17,6 +17,7 @@ export class FeaturedChatsComponent implements OnInit{
 
   ngOnInit(){
     let currentUser = JSON.parse(localStorage.getItem('currentUser')).username;
+    console.log("REQUESTING USERBYNAME FROM GROUPLIST");
     this._conversationDataService.getUserByName(currentUser).subscribe(user => {
       this._groups = user.groupCH;
     });
@@ -29,7 +30,7 @@ export class FeaturedChatsComponent implements OnInit{
   onSubmit(){
     let group = this.group.value.group;
     this._conversationDataService.connectGroup(group).subscribe(group => {
-      console.log(group);
+      //console.log(group);
       this._groups.push(group);
     });
   }
