@@ -10,7 +10,6 @@ import { FormGroup, FormBuilder, Validators, FormArray, FormControl } from '@ang
   styleUrls: ['./conversation.component.css']
 })
 export class ConversationComponent implements OnInit {
-  private _currentUser = JSON.parse(localStorage.getItem('currentUser')).username;
   private _conv_id;
   private _conversation;
   private message: FormGroup;
@@ -21,6 +20,8 @@ export class ConversationComponent implements OnInit {
   constructor(private _conversationDataService : ConversationDataService, private fb: FormBuilder) {}
   
   ngOnInit(){
+    let currentUser = JSON.parse(localStorage.getItem('currentUser')).username;
+
     this.message = this.fb.group({
       text: [''],
     });
@@ -28,7 +29,7 @@ export class ConversationComponent implements OnInit {
     //SUBBING ON ACTIVE CONVO
     this._conversationDataService.active_conversation.subscribe(item => {
       // RETRIEVING CURRENT USER
-      this._conversationDataService.getUserByName(this._currentUser).subscribe(user => {
+      this._conversationDataService.getUserByName(currentUser).subscribe(user => {
         this.country = user.country;
         // IF ACTIVE CONVO === NULL OR ""
         if(item === null){
@@ -54,7 +55,7 @@ export class ConversationComponent implements OnInit {
               found = true;
             }
           };
-          if(!found){
+          if(found === false){
             // IF NOTHING FOUND RESET BHSubject
             this._conversationDataService.changeConversationId(null);
           }else{
