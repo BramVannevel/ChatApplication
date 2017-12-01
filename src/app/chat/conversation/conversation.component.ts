@@ -58,12 +58,15 @@ export class ConversationComponent implements OnInit {
   }
 
   onSubmit(){
-    let currentUser = JSON.parse(localStorage.getItem('currentUser')).username;
-    let message = new Message(this.message.value.text, currentUser, this.country);
-    this._conversationDataService.saveMessage(message, this._conversation._id).subscribe(msg => {
-      this._conversation.messages.push(msg);
-      this.message.reset();
-    });
+    if(this.message.value.text !== ""){
+      let currentUser = JSON.parse(localStorage.getItem('currentUser')).username;
+      let message = new Message(this.message.value.text, currentUser, this.country);
+      console.log(message);
+      this._conversationDataService.saveMessage(message, this._conversation._id).subscribe(msg => {
+        this._conversation.messages.push(msg);
+        this.message.reset();
+      });
+    }
   }
 
   get messages(){
