@@ -15,11 +15,7 @@ import 'rxjs/add/operator/mergeMap';
 
 @Injectable()
 export class ConversationDataService {
-
-  private _currentUser = JSON.parse(localStorage.getItem('currentUser')).username;
-
-  private _userUrl = 'http://localhost:4200/API/users/';
-  private _msgUrl = 'http://localhost:4200/API/messages/';
+  private _userUrl = '/API/users';
   private _chatroomUrl = '/API/chatrooms';
 
   private _conversations = new BehaviorSubject<string>(null);
@@ -41,7 +37,8 @@ export class ConversationDataService {
   }
 
   changeConversation(name){
-    this.getUserByName(this._currentUser).subscribe(user => {
+    let currentUser = JSON.parse(localStorage.getItem('currentUser')).username;
+    this.getUserByName(currentUser).subscribe(user => {
       for(let conv of user.privateCH){
         if(conv.users.find(user => user === name)){
           console.log(conv);
