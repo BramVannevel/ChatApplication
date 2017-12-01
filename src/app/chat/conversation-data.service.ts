@@ -65,24 +65,24 @@ export class ConversationDataService {
   }
 
   getUserByName(name){
-    return this.http.get(`http://localhost:4200/API/users/findbyname/${name.toLowerCase()}`, {headers: this.myHeaders})
+    return this.http.get(`${this._userUrl}/findbyname/${name.toLowerCase()}`, {headers: this.myHeaders})
       .map(response => response.json()).map(json => User.fromJSON(json));
   }
 
   getConversation(id): Observable<ChatRoom>{
-      return this.http.get(`http://localhost:4200/API/chatrooms/${id}`, {headers: this.myHeaders})
+      return this.http.get(`${this._chatroomUrl}/${id}`, {headers: this.myHeaders})
         .map(response => response.json());
   }
 
   addFriend(friend){
     let cU = JSON.parse(localStorage.getItem('currentUser')).username.toLowerCase();
-    return this.http.post(`http://localhost:4200/API/users/addfriend/${cU}`, {username: friend}, {headers: this.myHeaders})
+    return this.http.post(`${this._userUrl}/addfriend/${cU}`, {username: friend}, {headers: this.myHeaders})
      .map(response => response.json());
   }
 
   connectGroup(group){
     let cU = JSON.parse(localStorage.getItem('currentUser')).username.toLowerCase();
-    return this.http.post(`http://localhost:4200/API/users/connectGroup/${cU}`, {name : group}, {headers: this.myHeaders})
+    return this.http.post(`${this._userUrl}/connectGroup/${cU}`, {name : group}, {headers: this.myHeaders})
       .map(response => response.json());
   }
 }
