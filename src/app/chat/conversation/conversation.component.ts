@@ -59,6 +59,7 @@ export class ConversationComponent implements OnInit {
               found = true;
             }
           };
+          console.log(`FOUND?: ${found}`);
           if(!found){
             // IF NOTHING FOUND RESET BHSubject
             this._conversationDataService.changeToGroupConversation("");
