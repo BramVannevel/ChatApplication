@@ -15,7 +15,6 @@ export class ConversationComponent implements OnInit {
   private _conversation;
   private message: FormGroup;
   private country;
-  private last_active;
 
   private _msgs = new Array<Message[]>();
 
@@ -28,8 +27,6 @@ export class ConversationComponent implements OnInit {
 
     //SUBBING ON ACTIVE CONVO
     this._conversationDataService.active_conversation.subscribe(item => {
-      console.log(this.last_active);
-      this.last_active = item;
       // RETRIEVING CURRENT USER
       this._conversationDataService.getUserByName(this._currentUser).subscribe(user => {
         this.country = user.country;

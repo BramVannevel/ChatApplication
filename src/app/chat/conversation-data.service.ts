@@ -45,6 +45,7 @@ export class ConversationDataService {
       for(let conv of user.privateCH){
         // IF FOUND ADD CONVO TO ACTIVE CONVO
         if(conv.users.find(user => user === name)){
+          console.log(`CHANGING VALUE id:${conv._id} GETVALUE:${this._conversations.getValue}`);
           if(this._conversations.getValue !== conv._id){
             this._conversations.next(conv._id);
           } 
@@ -54,6 +55,7 @@ export class ConversationDataService {
   }
 
   changeConversationId(id){
+    console.log(`CHANGING VALUE id:${id} GETVALUE:${this._conversations.getValue}`);
     if(this._conversations.getValue !== id){
       this._conversations.next(id);
     }
