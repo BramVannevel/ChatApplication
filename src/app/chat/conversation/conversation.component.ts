@@ -44,6 +44,11 @@ export class ConversationComponent implements OnInit {
               found = true;
             }
           };
+          for(let element of user.groupCH){
+            if(element._id === item){
+              found = true;
+            }
+          };
           if(!found){
             this._conversationDataService.changeToGroupConversation("");
           }else{
