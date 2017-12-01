@@ -45,14 +45,18 @@ export class ConversationDataService {
       for(let conv of user.privateCH){
         // IF FOUND ADD CONVO TO ACTIVE CONVO
         if(conv.users.find(user => user === name)){
-          this._conversations.next(conv._id);
+          if(this._conversations.getValue !== conv._id){
+            this._conversations.next(conv._id);
+          } 
         }
       }
     });
   }
 
   changeConversationId(id){
-    this._conversations.next(id);
+    if(this._conversations.getValue !== id){
+      this._conversations.next(id);
+    }
   }
 
   addGroup(groupHash){
