@@ -35,7 +35,7 @@ export class ConversationDataService {
     return this._active_conversation;
   }
 
-  changeConversation(name){
+  changeConversation(userid){
     // GET CURRENT USER
     let currentUser = JSON.parse(localStorage.getItem('currentUser')).username;
     // RETRIEVE CURRENT USER FROM DB
@@ -44,7 +44,7 @@ export class ConversationDataService {
       // CHECK IF USER HAS PM WITH OTHER USER (name)
       for(let conv of user.privateCH){
         // IF FOUND ADD CONVO TO ACTIVE CONVO
-        if(conv.users.find(user => user === name)){
+        if(conv.users.find(user => user === userid)){
           if(this._conversations.getValue() !== conv._id){
             this._conversations.next(conv._id);
             console.log(`CHANGING VALUE id:${conv._id} GETVALUE:${this._conversations.getValue()}`);

@@ -26,7 +26,25 @@ export class ConversationComponent implements OnInit {
       text: [''],
     });
 
-    this._conversationDataService.active_conversation.subscribe(item => {
+
+    this._conversationDataService.getUserByName(currentUser).subscribe(user => {
+      this.country = user.country;
+      this._conversationDataService.active_conversation.subscribe(item => {
+        if(item == null){
+          if(user.privateCH.length > 0){
+            this._conversationDataService.changeConversationId(user.privateCH[0]._id);
+          }else{
+            this.message.disable();
+          }
+        }else{
+          this._conversationDataService.getConversation(item).subscribe(conv => {
+            this.message.enable();
+            this._conversation = conv;
+          });
+        }
+      });
+    });
+    /*this._conversationDataService.active_conversation.subscribe(item => {
       if(item === null){
         this._conversationDataService.getUserByName(currentUser).subscribe(user => {
           this.country = user.country;
@@ -39,7 +57,7 @@ export class ConversationComponent implements OnInit {
       }else{
         this._conversationDataService.getUserByName(currentUser).subscribe(user => {
           let found = false;
-          
+
           for(let element of user.privateCH){
             if(element._id === item){
               found = true;
@@ -62,7 +80,7 @@ export class ConversationComponent implements OnInit {
           } 
         });
       }
-    });
+    });*/
 
     //SUBBING ON ACTIVE CONVO
     /*this._conversationDataService.active_conversation.subscribe(item => {
