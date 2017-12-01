@@ -37,29 +37,10 @@ export class ConversationComponent implements OnInit {
             this.message.disable();
           }
         }else{
-          let found = false;
-  
-          for(let element of user.privateCH){
-            if(element._id === item){
-              found = true;
-            }
-          };
-
-          for(let element of user.groupCH){
-            if(element._id === item){
-              found = true;
-            }
-          };
-
-          if(found === false){
-            this._conversationDataService.changeConversationId(null);
-          }else{
-            console.log("id found");
-            this._conversationDataService.getConversation(item).subscribe(conv => {
-              this.message.enable();
-              this._conversation = conv;
-            });
-          } 
+          this._conversationDataService.getConversation(item).subscribe(conv => {
+            this.message.enable();
+            this._conversation = conv;
+          });
         }
       });
     });
