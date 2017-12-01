@@ -19,7 +19,7 @@ router.get('/', function (req, res, next) {
   });
 });
 
-router.post('/connectGroup/:username', function(req, res, next){
+router.post('/connectGroup/:username', auth, function(req, res, next){
   let query = User.findOne({username: req.params.username}).populate('groupCH');
   query.exec(function(err, user){
     if (err) return next(err);
@@ -46,7 +46,7 @@ router.post('/connectGroup/:username', function(req, res, next){
   });
 });
 
-router.post('/addfriend/:username', function (req, res, next) {
+router.post('/addfriend/:username', auth, function (req, res, next) {
   let query = User.findOne({ username: req.params.username }).populate('friends');
   query.exec(function (err, user) {
     if (err) return next(err);
@@ -82,7 +82,7 @@ router.post('/addfriend/:username', function (req, res, next) {
   });
 });
 
-router.get('/findbyname/:name', function (req, res, next) {
+router.get('/findbyname/:name', auth, function (req, res, next) {
   let query = User.findOne({ username: req.params.name }).populate(['friends','privateCH','groupCH']);
   query.exec(function (err, user) {
     if (err) return next(err);

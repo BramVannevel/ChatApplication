@@ -25,7 +25,12 @@ export class ConversationDataService {
   private _conversations = new BehaviorSubject<string>(null);
   private _active_conversation = this._conversations.asObservable();
 
-  private myHeaders = new Headers({Authorization: `Bearer ${this.auth.token}`})
+  private myHeaders = new Headers(
+    {
+      Authorization: `Bearer ${this.auth.token}`,
+      'Content-Type': 'application/json'
+    }
+  )
   private postHeader = new Headers({ 'Content-Type': 'application/json' });
 
   constructor(private http : Http, private auth: AuthenticationService) {
@@ -52,35 +57,35 @@ export class ConversationDataService {
 
   addGroup(groupHash){
     let cU = this._currentUser.toLowerCase();
-    return this.http.post(`${this._chatroomUrl}/createroom/${cU}`, groupHash)
+    return this.http.post(`${this._chatroomUrl}/createroom/${cU}`, groupHash,{headers: this.myHeaders})
       .map(res => res.json());
   }
 
   saveMessage(message, conv){
     console.log(JSON.stringify(message));
     return this.http.post(`${this._chatroomUrl}/postmessage/${conv}`, 
-      JSON.stringify(message), {headers : this.postHeader}).map(res => res.json());
+      JSON.stringify(message), {headers : this.myHeaders}).map(res => res.json());
   }
 
   getUserByName(name){
-    return this.http.get(`http://localhost:4200/API/users/findbyname/${name.toLowerCase()}`)
+    return this.http.get(`http://localhost:4200/API/users/findbyname/${name.toLowerCase()}`, {headers: this.myHeaders})
       .map(response => response.json()).map(json => User.fromJSON(json));
   }
 
   getConversation(id): Observable<ChatRoom>{
-      return this.http.get(`http://localhost:4200/API/chatrooms/${id}`)
+      return this.http.get(`http://localhost:4200/API/chatrooms/${id}`, {headers: this.myHeaders})
         .map(response => response.json());
   }
 
   addFriend(friend){
     let cU = this._currentUser.toLowerCase();
-    return this.http.post(`http://localhost:4200/API/users/addfriend/${cU}`, {username: friend})
+    return this.http.post(`http://localhost:4200/API/users/addfriend/${cU}`, {username: friend}, {headers: this.myHeaders})
      .map(response => response.json());
   }
 
   connectGroup(group){
     let cU = this._currentUser.toLowerCase();
-    return this.http.post(`http://localhost:4200/API/users/connectGroup/${cU}`, {name : group})
+    return this.http.post(`http://localhost:4200/API/users/connectGroup/${cU}`, {name : group}, {headers: this.myHeaders})
       .map(response => response.json());
   }
 }

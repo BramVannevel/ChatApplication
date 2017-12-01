@@ -11,7 +11,7 @@ let jwt = require('express-jwt');
 
 let auth = jwt({secret: process.env.CHAT_BACKEND_SECRET, userProperty: 'payload'});
 
-router.get('/', function(req, res, next) {
+router.get('/', auth, function(req, res, next) {
   let query = ChatRoom.find().populate(['users','messages']);
   query.exec(function (err, chatrooms) {
     if (err) { return next(err); }
@@ -19,7 +19,7 @@ router.get('/', function(req, res, next) {
   });
 });
 
-router.post('/createroom/:username', function (req, res, next) {
+router.post('/createroom/:username', auth, function (req, res, next) {
   let query = User.findOne({username: req.params.username}).populate('groupCH');
   query.exec(function(err, user){
     if (err) return next(err);
@@ -46,7 +46,7 @@ router.post('/createroom/:username', function (req, res, next) {
   
 });
 
-router.post('/postmessage/:id', function(req, res, next){
+router.post('/postmessage/:id', auth, function(req, res, next){
   let query = ChatRoom.findOne({_id: req.params.id});
   query.exec(function(err, chatroom){
     if (err) return next(err);
@@ -64,11 +64,11 @@ router.post('/postmessage/:id', function(req, res, next){
   });
 });
 
-router.get('/:chatroom', function(req, res) {
+router.get('/:chatroom', auth, function(req, res) {
   res.json(req.chatroom);
 });
 
-router.param('chatroom', function(req, res, next, id) {
+router.param('chatroom', auth, function(req, res, next, id) {
   let query = ChatRoom.findById(id).populate(['users','messages']);
   query.exec(function (err, chatroom){
     if (err) { return next(err); }
