@@ -38,10 +38,33 @@ export class ConversationComponent implements OnInit {
             this.message.disable();
           }
         }else{
-          this._conversationDataService.getConversation(item).subscribe(conv => {
-            this.message.enable();
-            this._conversation = conv;
-          });
+          // ITEM !=== NULL OR ""
+          let found = false;
+          // CHECK IF FOUND IN PM
+          for(let element of user.privateCH){
+            if(element._id === item){
+              found = true;
+            }
+          };
+          // CHECK IF FOUND IN GM
+          for(let element of user.groupCH){
+            if(element._id === item){
+              found = true;
+            }
+          };
+
+          if(found){
+            this._conversationDataService.getConversation(item).subscribe(conv => {
+              this.message.enable();
+              this._conversation = conv;
+            });
+          }else{
+            if(user.privateCH.length > 0){
+              this._conversationDataService.changeConversationId(user.privateCH[0]._id);
+            }else{
+              this.message.disable();
+            }
+          }
         }
       });
     });
