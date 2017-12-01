@@ -18,7 +18,6 @@ export class FeaturedChatsComponent implements OnInit{
 
   ngOnInit(){
     this._conversationDataService.getUserByName(this._currentUser).subscribe(user => {
-      console.log(user.groupCH);
       this._groups = user.groupCH;
     });
 

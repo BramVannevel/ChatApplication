@@ -71,7 +71,7 @@ export class ConversationDataService {
   getConversation(id): Observable<ChatRoom>{
       return this.http.get(`${this._chatroomUrl}/${id}`, {headers: this.myHeaders})
         .map(response => {
-          console.log(response);
+          console.log(response.json());
           return response.json()
         });
   }
