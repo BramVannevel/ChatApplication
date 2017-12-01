@@ -37,9 +37,13 @@ export class ConversationDataService {
   }
 
   changeConversation(name){
+    // GET CURRENT USER
     let currentUser = JSON.parse(localStorage.getItem('currentUser')).username;
+    // RETRIEVE CURRENT USER FROM DB
     this.getUserByName(currentUser).subscribe(user => {
+      // CHECK IF USER HAS PM WITH OTHER USER (name)
       for(let conv of user.privateCH){
+        // IF FOUND ADD CONVO TO ACTIVE CONVO
         if(conv.users.find(user => user === name)){
           this._conversations.next(conv._id);
         }
@@ -58,7 +62,6 @@ export class ConversationDataService {
   }
 
   saveMessage(message, conv){
-    console.log(JSON.stringify(message));
     return this.http.post(`${this._chatroomUrl}/postmessage/${conv}`, 
       JSON.stringify(message), {headers : this.myHeaders}).map(res => res.json());
   }

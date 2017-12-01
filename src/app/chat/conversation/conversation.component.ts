@@ -25,33 +25,43 @@ export class ConversationComponent implements OnInit {
       text: [''],
     });
 
+    //SUBBING ON ACTIVE CONVO
     this._conversationDataService.active_conversation.subscribe(item => {
+      // RETRIEVING CURRENT USER
       this._conversationDataService.getUserByName(this._currentUser).subscribe(user => {
         this.country = user.country;
-        if(item == null || item == ""){
+        // IF ACTIVE CONVO === NULL OR ""
+        if(item === null || item === ""){
+          // IF USER HAS PM
             if(user.privateCH.length > 0){
               this._conversationDataService.getConversation(user.privateCH[0]._id).subscribe(conv => {
                 this.message.enable();
                 this._conversation = conv;
               });
             }else{
+              // DISABLE CHAT
               this.message.disable();
             }
         }else{
+          // ITEM !=== NULL OR ""
           let found = false;
+          // CHECK IF FOUND IN PM
           for(let element of user.privateCH){
             if(element._id === item){
               found = true;
             }
           };
+          // CHECK IF FOUND IN GM
           for(let element of user.groupCH){
             if(element._id === item){
               found = true;
             }
           };
           if(!found){
+            // IF NOTHING FOUND RESET BHSubject
             this._conversationDataService.changeToGroupConversation("");
           }else{
+            // IF FOUND CHANGE TO LAST ACTIVE CONVO
             this._conversationDataService.getConversation(item).subscribe(conv => {
               this.message.enable();
               this._conversation = conv;
