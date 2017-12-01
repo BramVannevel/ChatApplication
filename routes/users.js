@@ -118,6 +118,7 @@ router.post('/register', function (req, res, next) {
   var user = new User();
   user.username = req.body.username;
   user.email = req.body.email;
+  user.country = req.body.country;
   user.setPassword(req.body.password)
   user.save(function (err) {
     if (err) { return next(err); }

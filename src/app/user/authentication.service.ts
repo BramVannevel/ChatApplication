@@ -44,8 +44,13 @@ export class AuthenticationService {
     }
   }
 
-  register(username: string, password: string, email: string): Observable<boolean> {
-    return this.http.post(`${this._url}/register`, { username: username, password: password, email: email })
+  register(username: string, password: string, country: string, email: string): Observable<boolean> {
+    return this.http.post(`${this._url}/register`, { 
+      username: username.toLowerCase(), 
+      password: password, 
+      country: country,
+      email: email 
+    })
       .map(res => res.json()).map(res => {
         const token = res.token;
         if (token) {
