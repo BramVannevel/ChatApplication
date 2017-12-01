@@ -28,6 +28,8 @@ export class ConversationComponent implements OnInit {
 
     //SUBBING ON ACTIVE CONVO
     this._conversationDataService.active_conversation.subscribe(item => {
+      console.log(`item: ${item} versus last_active:${this._last_active_conv}`);
+      
       if(item !== this._last_active_conv){
         // RETRIEVING CURRENT USER
         this._conversationDataService.getUserByName(this._currentUser).subscribe(user => {
