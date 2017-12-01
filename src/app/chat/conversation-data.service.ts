@@ -51,7 +51,7 @@ export class ConversationDataService {
     });
   }
 
-  changeToGroupConversation(id){
+  changeConversationId(id){
     this._conversations.next(id);
   }
 

@@ -27,19 +27,14 @@ export class ConversationComponent implements OnInit {
 
     //SUBBING ON ACTIVE CONVO
     this._conversationDataService.active_conversation.subscribe(item => {
-      //console.log(`LAST ACTIVE CONVO: ${item}`);
       // RETRIEVING CURRENT USER
       this._conversationDataService.getUserByName(this._currentUser).subscribe(user => {
-        //console.log("CALLLED GETUSERBYID from CONVO COMPONENT")
         this.country = user.country;
         // IF ACTIVE CONVO === NULL OR ""
         if(item === null || item === ""){
           // IF USER HAS PM
             if(user.privateCH.length > 0){
-              this._conversationDataService.getConversation(user.privateCH[0]._id).subscribe(conv => {
-                this.message.enable();
-                this._conversation = conv;
-              });
+              this._conversationDataService.changeConversationId(user.privateCH[0]._id);
             }else{
               // DISABLE CHAT
               this.message.disable();
@@ -49,24 +44,19 @@ export class ConversationComponent implements OnInit {
           let found = false;
           // CHECK IF FOUND IN PM
           for(let element of user.privateCH){
-            console.log(user.privateCH);
             if(element._id === item){
               found = true;
-              console.log(`found:${found} item:${item} element_id:${element._id}`);
             }
           };
           // CHECK IF FOUND IN GM
           for(let element of user.groupCH){
-            console.log(user.groupCH);
             if(element._id === item){
               found = true;
-              console.log(`found:${found} item:${item} element_id:${element._id}`);
             }
           };
-          //console.log(`FOUND?: ${found} ${item}`);
           if(!found){
             // IF NOTHING FOUND RESET BHSubject
-            this._conversationDataService.changeToGroupConversation(null);
+            this._conversationDataService.changeConversationId(null);
           }else{
             // IF FOUND CHANGE TO LAST ACTIVE CONVO
             this._conversationDataService.getConversation(item).subscribe(conv => {

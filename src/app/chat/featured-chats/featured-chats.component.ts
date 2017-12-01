@@ -40,6 +40,6 @@ export class FeaturedChatsComponent implements OnInit{
   }
 
   changeConversation(room){
-    this._conversationDataService.changeToGroupConversation(room._id);
+    this._conversationDataService.changeConversationId(room._id);
   }
 }
