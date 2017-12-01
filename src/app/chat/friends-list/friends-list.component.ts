@@ -10,7 +10,7 @@ import { FormGroup, FormBuilder, Validators, FormArray, FormControl } from '@ang
   styleUrls: ['./friends-list.component.css']
 })
 export class FriendsListComponent implements OnInit{
-  private _currentUser = JSON.parse(localStorage.getItem('currentUser')).username;
+  
   private _friends;
 
   public user: FormGroup;
@@ -18,7 +18,8 @@ export class FriendsListComponent implements OnInit{
   constructor(private _conversationDataService : ConversationDataService, private fb: FormBuilder) { }
 
   ngOnInit(){
-    this._conversationDataService.getUserByName(this._currentUser).subscribe(user => {
+    let currentUser = JSON.parse(localStorage.getItem('currentUser')).username;
+    this._conversationDataService.getUserByName(currentUser).subscribe(user => {
       this._friends = user.friends;
     });
 
