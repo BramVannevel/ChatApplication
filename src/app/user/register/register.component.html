@@ -30,7 +30,7 @@
 
     <div class="field">
       <label for="country">Country</label>
-      <select class="ui search dropdown" id="country">
+      <select class="ui search dropdown" id="country" formControlName="country">
         <option value="">Select Country</option>
         <option value="AF">Afghanistan</option>
         <option value="AX">Åland Islands</option>
@@ -282,6 +282,9 @@
         <option value="ZM">Zambia</option>
         <option value="ZW">Zimbabwe</option>
       </select>
+      <div class='ui pointing red basic label' *ngIf=' user.get("country").errors?.required && user.get("country").touched'>
+        Select your country
+      </div>
     </div>
     
     <div formGroupName='passwordGroup'>
