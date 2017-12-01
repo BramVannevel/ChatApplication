@@ -15,6 +15,8 @@ export class ConversationComponent implements OnInit {
   private message: FormGroup;
   private country;
 
+  private _active_user;
+
   private _msgs = new Array<Message[]>();
 
   constructor(private _conversationDataService : ConversationDataService, private fb: FormBuilder) {}
@@ -26,8 +28,27 @@ export class ConversationComponent implements OnInit {
       text: [''],
     });
 
-
     this._conversationDataService.getUserByName(currentUser).subscribe(user => {
+      this._active_user = user;
+    });
+
+    this._conversationDataService.active_conversation.subscribe(item => {
+      if(item == null){
+        if(this._active_user.privateCH.length > 0){
+          this._conversationDataService.changeConversationId(this._active_user.privateCH[0]._id);
+        }else{
+          this.message.disable();
+        }
+      }else{
+        this._conversationDataService.getConversation(item).subscribe(conv => {
+          this.message.enable();
+          this._conversation = conv;
+        });
+      }
+    });
+
+
+    /*this._conversationDataService.getUserByName(currentUser).subscribe(user => {
       this.country = user.country;
       this._conversationDataService.active_conversation.subscribe(item => {
         if(item == null){
@@ -43,44 +64,9 @@ export class ConversationComponent implements OnInit {
           });
         }
       });
-    });
-    /*this._conversationDataService.active_conversation.subscribe(item => {
-      if(item === null){
-        this._conversationDataService.getUserByName(currentUser).subscribe(user => {
-          this.country = user.country;
-          if(user.privateCH.length > 0){
-            this._conversationDataService.changeConversationId(user.privateCH[0]._id);
-          }else{
-            this.message.disable();
-          }
-        });
-      }else{
-        this._conversationDataService.getUserByName(currentUser).subscribe(user => {
-          let found = false;
-
-          for(let element of user.privateCH){
-            if(element._id === item){
-              found = true;
-            }
-          };
-
-          for(let element of user.groupCH){
-            if(element._id === item){
-              found = true;
-            }
-          };
-
-          if(found === false){
-            this._conversationDataService.changeConversationId(null);
-          }else{
-            this._conversationDataService.getConversation(item).subscribe(conv => {
-              this.message.enable();
-              this._conversation = conv;
-            });
-          } 
-        });
-      }
     });*/
+
+
 
     //SUBBING ON ACTIVE CONVO
     /*this._conversationDataService.active_conversation.subscribe(item => {
