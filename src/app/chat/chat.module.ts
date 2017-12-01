@@ -17,7 +17,8 @@ import { ConversationDataService } from './conversation-data.service';
 //THIRD PARTY MODULES
 
 import { NgxAutoScroll } from "ngx-auto-scroll/lib/ngx-auto-scroll.directive";
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 const routes = [
     { path: 'chat', component: ChatWindowComponent },
@@ -30,6 +31,7 @@ const routes = [
     CommonModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
+    MatTooltipModule,
     RouterModule.forChild(routes)
   ],
   declarations: [
