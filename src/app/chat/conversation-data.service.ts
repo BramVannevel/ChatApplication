@@ -41,7 +41,6 @@ export class ConversationDataService {
     this.getUserByName(currentUser).subscribe(user => {
       for(let conv of user.privateCH){
         if(conv.users.find(user => user === name)){
-          console.log(conv);
           this._conversations.next(conv._id);
         }
       }
@@ -71,7 +70,7 @@ export class ConversationDataService {
 
   getConversation(id): Observable<ChatRoom>{
       return this.http.get(`${this._chatroomUrl}/${id}`, {headers: this.myHeaders})
-        .map(response => response.json());
+        .map(response => response.json().map(json => ChatRoom.fromJSON(json)));
   }
 
   addFriend(friend){

@@ -4,8 +4,8 @@ import { Message } from './message.model';
 export class ChatRoom {
     
     //Info
-    private _id: String;
-    private _owner: User;
+    private _id: string;
+    private _owner: string;
     private _moderators;
     private _image: string;
     private _name: string;
@@ -19,13 +19,14 @@ export class ChatRoom {
     private _likes: number;
     private _tUsers: number;
 
-    constructor(name: string, users?: Array<User>, messages?: Array<Message>, owner?: String){
+    constructor(name: string, users?: Array<User>, messages?: Array<Message>, owner?: string){
         this._users = users || new Array<User>();
         this._messages = messages || new Array<Message>();
         this._name = name;
+        this._owner = owner;
     }
 
-    setValues(owner: User, image: string, name: string, is_public: boolean, tags: string[]){
+    setValues(owner: string, image: string, name: string, is_public: boolean, tags: string[]){
         this._owner = owner;
         this._image = image;
         this._name = name;
