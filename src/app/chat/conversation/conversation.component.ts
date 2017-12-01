@@ -29,6 +29,7 @@ export class ConversationComponent implements OnInit {
     this._conversationDataService.active_conversation.subscribe(item => {
       // RETRIEVING CURRENT USER
       this._conversationDataService.getUserByName(this._currentUser).subscribe(user => {
+        console.log("CALLLED GETUSERBYID from CONVO COMPONENT")
         this.country = user.country;
         // IF ACTIVE CONVO === NULL OR ""
         if(item === null || item === ""){
@@ -76,7 +77,7 @@ export class ConversationComponent implements OnInit {
     if(this.message.value.text !== ""){
       let currentUser = JSON.parse(localStorage.getItem('currentUser')).username;
       let message = new Message(this.message.value.text, currentUser, this.country);
-      console.log(message);
+      //console.log(message);
       this._conversationDataService.saveMessage(message, this._conversation._id).subscribe(msg => {
         this._conversation.messages.push(msg);
         this.message.reset();

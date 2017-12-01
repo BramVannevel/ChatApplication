@@ -29,8 +29,7 @@ export class ConversationDataService {
   )
   private postHeader = new Headers({ 'Content-Type': 'application/json' });
 
-  constructor(private http : Http, private auth: AuthenticationService) {
-  }
+  constructor(private http : Http, private auth: AuthenticationService) {}
 
   get active_conversation(){
     return this._active_conversation;
@@ -40,6 +39,7 @@ export class ConversationDataService {
     // GET CURRENT USER
     let currentUser = JSON.parse(localStorage.getItem('currentUser')).username;
     // RETRIEVE CURRENT USER FROM DB
+    console.log("REQUESTING GETUSEDBYNAME from changeConversation");
     this.getUserByName(currentUser).subscribe(user => {
       // CHECK IF USER HAS PM WITH OTHER USER (name)
       for(let conv of user.privateCH){
@@ -72,7 +72,6 @@ export class ConversationDataService {
   }
 
   getConversation(id): Observable<ChatRoom>{
-    console.log(JSON.parse(localStorage.getItem('currentUser')).token)
     return this.http.get(`${this._chatroomUrl}/${id}`, {headers: this.myHeaders})
       .map(response => response.json());
   }

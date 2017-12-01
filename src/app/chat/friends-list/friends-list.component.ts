@@ -19,6 +19,7 @@ export class FriendsListComponent implements OnInit{
 
   ngOnInit(){
     let currentUser = JSON.parse(localStorage.getItem('currentUser')).username;
+    console.log("Calling GETUSERBYID FROM FRIENDSLISTCOMPONENT");
     this._conversationDataService.getUserByName(currentUser).subscribe(user => {
       this._friends = user.friends;
     });

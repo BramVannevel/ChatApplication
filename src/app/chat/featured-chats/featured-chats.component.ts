@@ -9,7 +9,6 @@ import { FormGroup, FormBuilder, Validators, FormArray, FormControl } from '@ang
   styleUrls: ['./featured-chats.component.css']
 })
 export class FeaturedChatsComponent implements OnInit{
-  private _currentUser = JSON.parse(localStorage.getItem('currentUser')).username;
   private _groups;
   
   public group: FormGroup;
@@ -17,7 +16,8 @@ export class FeaturedChatsComponent implements OnInit{
   constructor(private _conversationDataService : ConversationDataService, private fb: FormBuilder) { }
 
   ngOnInit(){
-    this._conversationDataService.getUserByName(this._currentUser).subscribe(user => {
+    let currentUser = JSON.parse(localStorage.getItem('currentUser')).username;
+    this._conversationDataService.getUserByName(currentUser).subscribe(user => {
       this._groups = user.groupCH;
     });
 
