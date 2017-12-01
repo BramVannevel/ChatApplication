@@ -14,6 +14,7 @@ export class ConversationComponent implements OnInit {
   private _conv_id;
   private _conversation;
   private message: FormGroup;
+  private country;
 
   private _msgs = new Array<Message[]>();
 
@@ -26,6 +27,7 @@ export class ConversationComponent implements OnInit {
 
     this._conversationDataService.active_conversation.subscribe(item => {
       this._conversationDataService.getUserByName(this._currentUser).subscribe(user => {
+        this.country = user.country;
         if(item == null){
             if(user.privateCH.length > 0){
               this._conversationDataService.getConversation(user.privateCH[0]._id).subscribe(conv => {
@@ -57,7 +59,7 @@ export class ConversationComponent implements OnInit {
 
   onSubmit(){
     let currentUser = JSON.parse(localStorage.getItem('currentUser')).username;
-    let message = new Message(this.message.value.text, currentUser);
+    let message = new Message(this.message.value.text, currentUser, this.country);
     this._conversationDataService.saveMessage(message, this._conversation._id).subscribe(msg => {
       this._conversation.messages.push(msg);
       this.message.reset();
