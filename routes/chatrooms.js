@@ -73,7 +73,7 @@ router.param('chatroom', auth, function(req, res, next, id) {
   query.exec(function (err, chatroom){
     if (err) { return next(err); }
     if (!chatroom) { return next(new Error('not found ' + id)); }
-    req.chatroom = chatroom;
+      req.chatroom = chatroom;
     return next();
   });
 }); 

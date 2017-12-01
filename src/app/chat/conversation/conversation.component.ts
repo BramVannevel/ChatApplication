@@ -25,23 +25,33 @@ export class ConversationComponent implements OnInit {
     });
 
     this._conversationDataService.active_conversation.subscribe(item => {
-      if(item == null){
-        this._conversationDataService.getUserByName(this._currentUser).subscribe(user => {
-          if(user.privateCH.length > 0){
-            this._conversationDataService.getConversation(user.privateCH[0]._id).subscribe(conv => {
+      this._conversationDataService.getUserByName(this._currentUser).subscribe(user => {
+        if(item == null){
+            if(user.privateCH.length > 0){
+              this._conversationDataService.getConversation(user.privateCH[0]._id).subscribe(conv => {
+                this.message.enable();
+                this._conversation = conv;
+              });
+            }else{
+              this.message.disable();
+            }
+        }else{
+          let found = false;
+          user.privateCH.array.forEach(element => {
+            if(element._id === item){
+              found = true;
+            }
+          });
+          if(!found){
+            this._conversationDataService.changeToGroupConversation("");
+          }else{
+            this._conversationDataService.getConversation(item).subscribe(conv => {
               this.message.enable();
               this._conversation = conv;
             });
-          }else{
-            this.message.disable();
-          }
-        });
-      }else{
-        this._conversationDataService.getConversation(item).subscribe(conv => {
-          this.message.enable();
-          this._conversation = conv;
-        });
-      }
+          } 
+        }
+      });
     });
   }
 
