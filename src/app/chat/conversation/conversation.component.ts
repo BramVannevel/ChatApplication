@@ -37,11 +37,11 @@ export class ConversationComponent implements OnInit {
             }
         }else{
           let found = false;
-          user.privateCH.array.forEach(element => {
+          for(let element of user.privateCH){
             if(element._id === item){
               found = true;
             }
-          });
+          };
           if(!found){
             this._conversationDataService.changeToGroupConversation("");
           }else{
