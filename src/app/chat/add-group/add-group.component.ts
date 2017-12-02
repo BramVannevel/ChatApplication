@@ -29,7 +29,6 @@ export class AddGroupComponent implements OnInit {
 
   onSubmit() {
     let currentUser = JSON.parse(localStorage.getItem('currentUser'));
-    console.log(currentUser);
     let groupHash = {
       owner : currentUser.username,
       name: this.group.value.name,

@@ -305,7 +305,3 @@
     </div>
     <button type='submit' [disabled]='!user.valid' class="ui positive right floated button">register</button>
   </form>
-
-  REMOVE {{ user.value | json }} {{ user.valid }}<br>
-  {{ spy.className }}<br>
-  {{ user.get("email").errors | json}}

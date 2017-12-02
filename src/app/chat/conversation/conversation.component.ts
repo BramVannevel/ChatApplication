@@ -31,6 +31,7 @@ export class ConversationComponent implements OnInit {
     this._conversationDataService.getUserByName(currentUser).subscribe(user => {
       this.country = user.country;
       this._conversationDataService.active_conversation.subscribe(item => {
+
         if(item == null){
           if(user.privateCH.length > 0){
             this._conversationDataService.changeConversationId(user.privateCH[0]._id);
@@ -38,15 +39,15 @@ export class ConversationComponent implements OnInit {
             this.message.disable();
           }
         }else{
-          // ITEM !=== NULL OR ""
+
           let found = false;
-          // CHECK IF FOUND IN PM
+
           for(let element of user.privateCH){
             if(element._id === item){
               found = true;
             }
           };
-          // CHECK IF FOUND IN GM
+
           for(let element of user.groupCH){
             if(element._id === item){
               found = true;
@@ -54,11 +55,13 @@ export class ConversationComponent implements OnInit {
           };
 
           if(found){
+            console.log("found");
             this._conversationDataService.getConversation(item).subscribe(conv => {
               this.message.enable();
               this._conversation = conv;
             });
           }else{
+            console.log("not found");
             if(user.privateCH.length > 0){
               this._conversationDataService.changeConversationId(user.privateCH[0]._id);
             }else{
@@ -119,7 +122,6 @@ export class ConversationComponent implements OnInit {
     if(this.message.value.text !== ""){
       let currentUser = JSON.parse(localStorage.getItem('currentUser')).username;
       let message = new Message(this.message.value.text, currentUser, this.country);
-      //console.log(message);
       this._conversationDataService.saveMessage(message, this._conversation._id).subscribe(msg => {
         this._conversation.messages.push(msg);
         this.message.reset();

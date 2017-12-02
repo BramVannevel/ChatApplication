@@ -36,7 +36,6 @@ export class MessageComponent {
     if(this.message.country !== undefined){
       let c = this.message.country.toLowerCase();
       country = country.concat(`${c} flag`);
-      //console.log(country);
     }
     
     this.country = country;

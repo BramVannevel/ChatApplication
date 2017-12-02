@@ -30,7 +30,6 @@ export class FeaturedChatsComponent implements OnInit{
   onSubmit(){
     let group = this.group.value.group;
     this._conversationDataService.connectGroup(group).subscribe(group => {
-      //console.log(group);
       this._groups.push(group);
     });
   }
