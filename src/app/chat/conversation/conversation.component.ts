@@ -39,37 +39,10 @@ export class ConversationComponent implements OnInit {
             this.message.disable();
           }
         }else{
-
-          /*let found = false;
-
-          for(let element of user.privateCH){
-            if(element._id === item){
-              found = true;
-            }
-          };
-
-          for(let element of user.groupCH){
-            if(element._id === item){
-              found = true;
-            }
-          };*/
-
           this._conversationDataService.getConversation(item).subscribe(conv => {
             this.message.enable();
             this._conversation = conv;
           });
-
-          /*if(found){
-            console.log("found");
-            
-          }else{
-            console.log("not found");
-            if(user.privateCH.length > 0){
-              this._conversationDataService.changeConversationId(user.privateCH[0]._id);
-            }else{
-              this.message.disable();
-            }
-          }*/
         }
       });
     });
