@@ -40,7 +40,7 @@ export class ConversationComponent implements OnInit {
           }
         }else{
 
-          let found = false;
+          /*let found = false;
 
           for(let element of user.privateCH){
             if(element._id === item){
@@ -52,14 +52,16 @@ export class ConversationComponent implements OnInit {
             if(element._id === item){
               found = true;
             }
-          };
+          };*/
 
-          if(found){
+          this._conversationDataService.getConversation(item).subscribe(conv => {
+            this.message.enable();
+            this._conversation = conv;
+          });
+
+          /*if(found){
             console.log("found");
-            this._conversationDataService.getConversation(item).subscribe(conv => {
-              this.message.enable();
-              this._conversation = conv;
-            });
+            
           }else{
             console.log("not found");
             if(user.privateCH.length > 0){
@@ -67,7 +69,7 @@ export class ConversationComponent implements OnInit {
             }else{
               this.message.disable();
             }
-          }
+          }*/
         }
       });
     });
