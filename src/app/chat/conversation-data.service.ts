@@ -31,10 +31,6 @@ export class ConversationDataService {
 
   constructor(private http : Http, private auth: AuthenticationService) {}
 
-  setConvo(){
-    console.log("setting convo");
-  }
-
   get active_conversation(){
     return this._active_conversation;
   }

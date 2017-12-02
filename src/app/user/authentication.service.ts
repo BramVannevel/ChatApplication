@@ -1,7 +1,6 @@
 import { BehaviorSubject, Observable } from 'rxjs/Rx';
 import { Http, Response } from '@angular/http';
 import { Injectable } from '@angular/core';
-import { ConversationDataService } from '../chat/conversation-data.service';
 import 'rxjs/add/operator/map';
 
 @Injectable()
@@ -11,7 +10,7 @@ export class AuthenticationService {
 
   public redirectUrl: string;
 
-  constructor(private http: Http, private cservice: ConversationDataService) {
+  constructor(private http: Http) {
     const currentUser = JSON.parse(localStorage.getItem('currentUser'));
     this._user$ = new BehaviorSubject<string>(currentUser && currentUser.username);
   }
@@ -25,7 +24,6 @@ export class AuthenticationService {
   }
 
   login(username: string, password: string): Observable<boolean> {
-    this.cservice.setConvo();
     return this.http.post(`${this._url}/login`, { username: username.toLowerCase(), password: password })
       .map(res => res.json()).map(res => {
         const token = res.token;
