@@ -12,6 +12,7 @@ import { FormGroup, FormBuilder, Validators, FormArray, FormControl } from '@ang
 export class FriendsListComponent implements OnInit{
   
   private _friends;
+  private a_user;
 
   public user: FormGroup;
 
@@ -21,6 +22,7 @@ export class FriendsListComponent implements OnInit{
     let currentUser = JSON.parse(localStorage.getItem('currentUser')).username;
     this._conversationDataService.getUserByName(currentUser).subscribe(user => {
       this._friends = user.friends;
+      this.a_user = user;
     });
 
     this.user = this.fb.group({
@@ -40,6 +42,11 @@ export class FriendsListComponent implements OnInit{
   }
 
   changeConversation(user){
-    this._conversationDataService.changeConversation(user._id);
+    for(let conv of this.a_user.privateCH){
+      if(conv.users.find(found => found === user._id)){
+        this._conversationDataService.changeConversationId(conv._id);
+      }
+    }
+    //this._conversationDataService.changeConversation(user._id);
   }
 }
