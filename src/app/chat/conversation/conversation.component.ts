@@ -22,7 +22,7 @@ export class ConversationComponent implements OnInit {
   constructor(private _conversationDataService : ConversationDataService, private fb: FormBuilder) {}
   
   ngOnInit(){
-    let currentUser = JSON.parse(localStorage.getItem('currentUser')).username;
+    
 
     this.message = this.fb.group({
       text: [''],
@@ -51,6 +51,7 @@ export class ConversationComponent implements OnInit {
 
     //SUBBING ON ACTIVE CONVO
     this._conversationDataService.active_conversation.subscribe(item => {
+      let currentUser = JSON.parse(localStorage.getItem('currentUser')).username;
       // RETRIEVING CURRENT USER
       this._conversationDataService.getUserByNameNoPopulate(currentUser).subscribe(user => {
         this.country = user.country;
