@@ -92,6 +92,16 @@ router.get('/findbyname/:name', auth, function (req, res, next) {
   });
 });
 
+router.get('/FindByNameNoPopulate/:name', auth, function (req, res, next) {
+  let query = User.findOne({ username: req.params.name });
+  query.exec(function (err, user) {
+    if (err) return next(err);
+    if (!user)
+      return next(new Error('not found ' + req.params.name));
+    res.json(user);
+  });
+});
+
 router.post('/', auth, function (req, res, next) {
   let user = new User(req.body);
   user.save(function (err, post) {

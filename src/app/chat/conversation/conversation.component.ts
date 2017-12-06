@@ -28,13 +28,13 @@ export class ConversationComponent implements OnInit {
       text: [''],
     });
 
-    this._conversationDataService.getUserByName(currentUser).subscribe(user => {
+    /*this._conversationDataService.getUserByNameNoPopulate(currentUser).subscribe(user => {
       this.country = user.country;
       this._conversationDataService.active_conversation.subscribe(item => {
 
         if(item == null){
           if(user.privateCH.length > 0){
-            this._conversationDataService.changeConversationId(user.privateCH[0]._id);
+            this._conversationDataService.changeConversationId(user.privateCH[0]);
           }else{
             this.message.disable();
           }
@@ -45,39 +45,40 @@ export class ConversationComponent implements OnInit {
           });
         }
       });
-    });
+    });*/
 
 
 
     //SUBBING ON ACTIVE CONVO
-    /*this._conversationDataService.active_conversation.subscribe(item => {
+    this._conversationDataService.active_conversation.subscribe(item => {
       // RETRIEVING CURRENT USER
-      this._conversationDataService.getUserByName(currentUser).subscribe(user => {
+      this._conversationDataService.getUserByNameNoPopulate(currentUser).subscribe(user => {
         this.country = user.country;
         // IF ACTIVE CONVO === NULL OR ""
         if(item === null){
           // IF USER HAS PM
             if(user.privateCH.length > 0){
-              this._conversationDataService.changeConversationId(user.privateCH[0]._id);
+              this._conversationDataService.changeConversationId(user.privateCH[0]);
             }else{
               // DISABLE CHAT
               this.message.disable();
             }
         }else{
-          // ITEM !=== NULL OR ""
+          // ITEM !== NULL
           let found = false;
-          // CHECK IF FOUND IN PM
+          // CHECK IF FOUND IN PRIVATE MESSAGESs
           for(let element of user.privateCH){
-            if(element._id === item){
+            if(element === item){
               found = true;
             }
           };
-          // CHECK IF FOUND IN GM
+          // CHECK IF FOUND IN GROUP MESSAGES
           for(let element of user.groupCH){
-            if(element._id === item){
+            if(element === item){
               found = true;
             }
           };
+
           if(found === false){
             // IF NOTHING FOUND RESET BHSubject
             this._conversationDataService.changeConversationId(null);
@@ -90,7 +91,7 @@ export class ConversationComponent implements OnInit {
           } 
         }
       });
-    });*/
+    });
   }
 
   onSubmit(){

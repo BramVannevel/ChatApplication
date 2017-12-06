@@ -35,19 +35,6 @@ export class ConversationDataService {
     return this._active_conversation;
   }
 
-  changeConversation(userid){
-    let currentUser = JSON.parse(localStorage.getItem('currentUser')).username;
-    this.getUserByName(currentUser).subscribe(user => {
-      for(let conv of user.privateCH){
-        if(conv.users.find(user => user === userid)){
-          if(this._conversations.getValue() !== conv._id){
-            this._conversations.next(conv._id);
-          } 
-        }
-      }
-    });
-  }
-
   changeConversationId(id){
     if(this._conversations.getValue() !== id){
       this._conversations.next(id);
@@ -70,6 +57,11 @@ export class ConversationDataService {
       .map(response => response.json()).map(json => User.fromJSON(json));
   }
 
+  getUserByNameNoPopulate(name){
+    return this.http.get(`${this._userUrl}/FindByNameNoPopulate/${name.toLowerCase()}`, {headers: this.myHeaders})
+      .map(response => response.json()).map(json => User.fromJSON(json));
+  }
+
   getConversation(id): Observable<ChatRoom>{
     return this.http.get(`${this._chatroomUrl}/${id}`, {headers: this.myHeaders})
       .map(response => response.json());
@@ -85,5 +77,18 @@ export class ConversationDataService {
     let cU = JSON.parse(localStorage.getItem('currentUser')).username.toLowerCase();
     return this.http.post(`${this._userUrl}/connectGroup/${cU}`, {name : group}, {headers: this.myHeaders})
       .map(response => response.json());
+  }
+
+  changeConversation(userid){
+    let currentUser = JSON.parse(localStorage.getItem('currentUser')).username;
+    this.getUserByName(currentUser).subscribe(user => {
+      for(let conv of user.privateCH){
+        if(conv.users.find(user => user === userid)){
+          if(this._conversations.getValue() !== conv._id){
+            this._conversations.next(conv._id);
+          } 
+        }
+      }
+    });
   }
 }
