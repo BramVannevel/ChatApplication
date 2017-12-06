@@ -55,7 +55,7 @@ export class ConversationComponent implements OnInit, OnDestroy {
     this._conversationDataService.active_conversation.takeUntil(this.myUnsubscribe).subscribe(item => {
       let currentUser = JSON.parse(localStorage.getItem('currentUser')).username;
       // RETRIEVING CURRENT USER
-      console.log(`getUserByName item '${item}' '${currentUser}'`);
+      //console.log(`getUserByName item '${item}' '${currentUser}'`);
       this._conversationDataService.getUserByNameNoPopulate(currentUser).takeUntil(this.myUnsubscribe).subscribe(user => {
         this.country = user.country;
         // IF ACTIVE CONVO === NULL OR ""

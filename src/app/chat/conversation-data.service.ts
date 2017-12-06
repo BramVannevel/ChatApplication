@@ -32,7 +32,6 @@ export class ConversationDataService {
   constructor(private http : Http, private auth: AuthenticationService) {}
 
   get active_conversation(){
-    console.log('active get');
     return this._active_conversation;
   }
 

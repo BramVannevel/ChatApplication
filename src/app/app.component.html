@@ -13,19 +13,19 @@
         </div>
       </div>-->
 
-      <div routerLink="/login" *ngIf='loggedIn() === false'>
+      <div routerLink="/login" *ngIf='!(currentUser | async)'>
         <a class="ui item">
             Login
           </a>
       </div>
 
-      <div routerLink="/register" *ngIf='loggedIn() === false'>
+      <div routerLink="/register" *ngIf='!(currentUser | async)'>
         <a class="ui item">
             Register
           </a>
       </div>
 
-      <div routerLink="/logout" *ngIf='loggedIn() === true'>
+      <div routerLink="/logout" *ngIf='(currentUser | async)'>
         <a class="ui item">
             Logout
           </a>
