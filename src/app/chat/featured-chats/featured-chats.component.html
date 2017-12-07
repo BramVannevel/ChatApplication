@@ -13,11 +13,13 @@
     </div>
   </div>
 </div>
-<div *ngFor="let room of groups" class="ui card featured-card" (click)="changeConversation(room)">
-  <div class="content">
-    {{room.name}}
-  </div>
-  <div class="image">
-    <img src="{{room.image}}" alt="No image">
+<div>
+  <div *ngFor="let room of groups" class="ui card featured-card" (click)="changeConversation(room)" id="group-list">
+    <div class="content">
+      {{room.name}}
+    </div>
+    <div class="image">
+      <img src="{{room.image}}" alt="No image">
+    </div>
   </div>
 </div>

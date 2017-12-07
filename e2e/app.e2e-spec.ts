@@ -1,14 +1,26 @@
-import { AppPage } from './app.po';
+import { ChatAppPage } from './app.po';
+import { browser, by, element } from 'protractor';
 
 describe('webapps-project App', () => {
-  let page: AppPage;
+  let page: ChatAppPage;
 
-  beforeEach(() => {
-    page = new AppPage();
+  beforeEach((done) => {
+    page = new ChatAppPage();
+    browser.get('/login');
+    browser.findElement(by.id('username')).sendKeys('test');
+    browser.findElement(by.id('password')).sendKeys('testtest');
+    const promise = browser.findElement(by.id('loginbtn')).click();
+    browser.wait(promise, 1000);
+    done();
   });
 
-  it('should display welcome message', () => {
+  it("has 1 friends", () => {
     page.navigateTo();
-    expect(page.getParagraphText()).toEqual('Welcome to app!');
+    expect(page.getFriendsList().count()).toEqual(1);
+  });
+
+  it("has no groups", () => {
+    page.navigateTo();
+    expect(page.getGroupList().count()).toEqual(0);
   });
 });
