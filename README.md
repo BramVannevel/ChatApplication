@@ -2,7 +2,8 @@
 
 Online version: https://mysterious-fjord-95020.herokuapp.com
 
-This is a simple chat application.
+This is a simple chat application. This is created as a Mean-stack application with Angular4.
+
 
 Functionalities:
   - Adding friends
